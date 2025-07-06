@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Persistence.Data.Migrations
+namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentity : Migration
+    public partial class InatalizeIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,9 +67,9 @@ namespace Persistence.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "273ee1bf-4213-4ced-a4cf-25d6efff0343", null, "Support Agent", null },
-                    { "b8c10d5f-8671-469c-9dc8-7a31b415e607", null, "Admin", null },
-                    { "f9298399-30e9-41ea-b299-10135811f0ba", null, "Customer", null }
+                    { "273ee1bf-4213-4ced-a4cf-25d6efff0343", null, "Support Agent", "SUPPORT AGENT" },
+                    { "b8c10d5f-8671-469c-9dc8-7a31b415e607", null, "Admin", "ADMIN" },
+                    { "f9298399-30e9-41ea-b299-10135811f0ba", null, "Customer", "CUSTOMER" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Data.Context
 {
-    public class AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options, IConfiguration configuration) : IdentityDbContext<ApplicationUser>(options)
+    public class AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {
 
      
@@ -28,26 +28,19 @@ namespace Persistence.Data.Context
 
 
             builder.Entity<IdentityRole>().HasData(new IdentityRole {Id= "b8c10d5f-8671-469c-9dc8-7a31b415e607",
-                Name = "Admin" },
+                Name = "Admin",
+                NormalizedName="ADMIN".ToUpper()
+            },
                 new IdentityRole {Id= "f9298399-30e9-41ea-b299-10135811f0ba",
-                    Name = "Customer" },
+                    Name = "Customer"
+                ,NormalizedName="Customer".ToUpper()},
                 new IdentityRole {Id= "273ee1bf-4213-4ced-a4cf-25d6efff0343",
-                    Name = "Support Agent" });
-
-            var hasher = new PasswordHasher<ApplicationUser>();
-            var Hash = hasher.HashPassword(null, configuration["SeedAdmin:Password"]);
-            var User = new ApplicationUser()
-            {
-                Id = "213566ac-e6de-4571-a2e2-1ec9b08f8aba",
-                Email = configuration["SeedAdmin:Email"],
-                FirstName = configuration["SeedAdmin:FirstName"]!,
-                LastName = configuration["SeedAdmin:LastName"]!,
-                PasswordHash = Hash,
-                RoleId= "b8c10d5f-8671-469c-9dc8-7a31b415e607"
+                    Name = "Support Agent",
+                NormalizedName= "Support Agent".ToUpper()
+                });
 
 
-            };
-            builder.Entity<ApplicationUser>().HasData(User);
+       
 
         }
     

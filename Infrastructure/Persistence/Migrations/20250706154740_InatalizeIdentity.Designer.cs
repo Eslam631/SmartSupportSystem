@@ -9,11 +9,11 @@ using Persistence.Data.Context;
 
 #nullable disable
 
-namespace Persistence.Data.Migrations
+namespace Persistence.Migrations
 {
     [DbContext(typeof(AuthorizationDbContext))]
-    [Migration("20250630074512_CreateIdentity")]
-    partial class CreateIdentity
+    [Migration("20250706154740_InatalizeIdentity")]
+    partial class InatalizeIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,17 +137,20 @@ namespace Persistence.Data.Migrations
                         new
                         {
                             Id = "b8c10d5f-8671-469c-9dc8-7a31b415e607",
-                            Name = "Admin"
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "f9298399-30e9-41ea-b299-10135811f0ba",
-                            Name = "Customer"
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "273ee1bf-4213-4ced-a4cf-25d6efff0343",
-                            Name = "Support Agent"
+                            Name = "Support Agent",
+                            NormalizedName = "SUPPORT AGENT"
                         });
                 });
 
