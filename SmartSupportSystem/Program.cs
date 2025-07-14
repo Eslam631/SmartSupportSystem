@@ -1,6 +1,7 @@
 
 using Domain.Contracts;
 using Persistence;
+using SmartSupportSystem.WepApi;
 
 namespace SmartSupportSystem
 {
@@ -20,6 +21,8 @@ namespace SmartSupportSystem
           
             builder. Services.AddOptions<SettingJsonAdmin>()
            .BindConfiguration(SettingJsonAdmin.SectionName);
+
+            builder.Services.AddWepApplicationRegister();
 
             builder.Services.AddOpenApi();
            
