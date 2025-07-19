@@ -3,6 +3,7 @@
     public record ErrorToReturn
     {
         public int status { get; set; }
-        public string Error { get; set; } = default!;
+        public string ErrorMassage { get; set; } = default!;
+        public List<string>? Errors { get; set; } 
     }
 }

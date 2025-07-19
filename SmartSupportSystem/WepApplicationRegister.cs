@@ -30,7 +30,7 @@ namespace SmartSupportSystem.WepApi
                     .Where(e => e.Value!.Errors.Count > 0)
                     .Select(e => new ValidationError
                     {
-                        Faild = e.Key,
+                        Feild = e.Key,
                         Errors = e.Value!.Errors.Select(x => x.ErrorMessage).ToList()
                     }).ToList();
                 var errorResponse = new ValidationErrorToReturn

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Domain.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
 using Shared.ErrorDto;
 
 namespace SmartSupportSystem.WepApi.CustomMiddleWare
@@ -11,20 +12,34 @@ namespace SmartSupportSystem.WepApi.CustomMiddleWare
         {
             _Logger.LogError(exception, "SomeThing Went Wrong.");
 
+            var Resposne = new ErrorToReturn
+            {
+
+                ErrorMassage = exception.Message
+
+            };
+
             httpContext.Response.StatusCode = exception switch
             {
-              
+                DuplicateEmailException => StatusCodes.Status409Conflict,
+                NotFoundException => StatusCodes.Status404NotFound,
+                BadRequestException badRequestException => GetBadRequest(Resposne, badRequestException),
+                UnauthorizeException => StatusCodes.Status401Unauthorized,
                 _ => StatusCodes.Status500InternalServerError
             };
 
-            var Error= new ErrorToReturn
-            {
-                status = httpContext.Response.StatusCode,
-                Error = exception.Message
-            };
-          await  httpContext.Response.WriteAsJsonAsync(Error, cancellationToken);
+            Resposne.status = httpContext.Response.StatusCode;
+
+            await httpContext.Response.WriteAsJsonAsync(Resposne, cancellationToken);
 
             return true;
+
+        }
+
+        private static int GetBadRequest(ErrorToReturn Resposne, BadRequestException badRequestException)
+        {
+            Resposne.Errors = badRequestException.Errors;
+            return StatusCodes.Status400BadRequest;
 
         }
     }

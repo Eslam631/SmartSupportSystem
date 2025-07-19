@@ -2,7 +2,7 @@
 {
     public record ValidationError
     {
-        public string Faild { get; set; } = default!;
+        public string Feild { get; set; } = default!;
       public IEnumerable<string> Errors { get; set; } = [];
     }
 }
