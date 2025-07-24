@@ -1,6 +1,9 @@
 
 using Domain.Contracts;
+using Microsoft.Extensions.Options;
 using Persistence;
+using Services;
+using Services.settingOption;
 using SmartSupportSystem.WepApi;
 
 namespace SmartSupportSystem
@@ -18,9 +21,9 @@ namespace SmartSupportSystem
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddInfraStructureServices(builder.Configuration);
-          
-            builder. Services.AddOptions<SettingJsonAdmin>()
-           .BindConfiguration(SettingJsonAdmin.SectionName);
+            builder.Services.AddApplicationServices(builder.Configuration);
+         
+            builder.Services.AddServiceJwt();
 
             builder.Services.AddWepApplicationRegister();
 
@@ -43,8 +46,10 @@ namespace SmartSupportSystem
                 app.UseSwaggerUI(option => option.SwaggerEndpoint("/openapi/v1.json", "v1"));
             }
 
+            app.UseExceptionHandler();
+            app.UseRouting();
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

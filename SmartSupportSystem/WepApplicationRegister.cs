@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Services.settingOption;
 using Shared.ErrorDto;
 using SmartSupportSystem.WepApi.CustomMiddleWare;
+using System.Text;
 
 namespace SmartSupportSystem.WepApi
 {
@@ -16,10 +21,42 @@ namespace SmartSupportSystem.WepApi
 
             });
 
-      return services;
+        
+
+            return services;
 
 
 
+        }
+        
+        public static IServiceCollection AddServiceJwt(this IServiceCollection services)
+        {
+            var provider = services.BuildServiceProvider();
+            var options = provider.GetRequiredService<IOptions<JwtSettingOption>>().Value;
+
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(option => {
+
+                option.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = options.Issuer,
+
+                    ValidateAudience = true,
+                    ValidAudience = options.Audience,
+
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
+                };
+                
+
+            })
+                ;
+
+            return services;
         }
 
         private static void GenrateValidationErrors(ApiBehaviorOptions Option)

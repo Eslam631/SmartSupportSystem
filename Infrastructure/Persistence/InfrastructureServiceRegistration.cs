@@ -19,14 +19,28 @@ namespace Persistence
                 option.UseSqlServer(Config.GetConnectionString("IdentityConnection"));
             });
 
-            services.AddIdentityCore<ApplicationUser>()
+            services.AddIdentityCore<ApplicationUser>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+              
+             
+                options.User.RequireUniqueEmail = false;
+            })
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AuthorizationDbContext>();
 
             services.AddScoped<IDataSeed, DataSeed>();
 
 
-
+            services.AddOptions<SettingJsonAdmin>()
+        .BindConfiguration(SettingJsonAdmin.SectionName);
 
             return services;
         }

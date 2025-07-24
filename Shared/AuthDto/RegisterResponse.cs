@@ -10,6 +10,11 @@
       
         public string RoleName { get; init; } = string.Empty;
 
+        public string token { get; init; } = string.Empty;
+      public  int ExpiresIn { get; init; } 
+
+
+
 
     }
 }

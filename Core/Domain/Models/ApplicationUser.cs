@@ -11,5 +11,7 @@ namespace Domain.Models
 
         public IdentityRole Role { get; set; } = default!;
 
+        public List<RefreshToken> RefreshTokens { get; set; } = [];
+
     }
 }

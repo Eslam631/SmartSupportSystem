@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Data.Configuration;
+using System.Reflection;
 
 namespace Persistence.Data.Context
 {
@@ -12,6 +14,8 @@ namespace Persistence.Data.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(typeof(ApplicationUserConfiguration).Assembly);
+
             builder.Entity<ApplicationUser>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Roles");
             builder.Ignore<IdentityUserRole<string>>();
@@ -21,22 +25,30 @@ namespace Persistence.Data.Context
             builder.Ignore<IdentityUserLogin<string>>();
 
 
-            builder.Entity<IdentityRole>().HasData(new IdentityRole {Id= "b8c10d5f-8671-469c-9dc8-7a31b415e607",
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = "b8c10d5f-8671-469c-9dc8-7a31b415e607",
                 Name = "Admin",
-                NormalizedName="ADMIN".ToUpper()
+                NormalizedName = "ADMIN".ToUpper()
             },
-                new IdentityRole {Id= "f9298399-30e9-41ea-b299-10135811f0ba",
+                new IdentityRole
+                {
+                    Id = "f9298399-30e9-41ea-b299-10135811f0ba",
                     Name = "Customer"
-                ,NormalizedName="Customer".ToUpper()},
-                new IdentityRole {Id= "273ee1bf-4213-4ced-a4cf-25d6efff0343",
+                ,
+                    NormalizedName = "Customer".ToUpper()
+                },
+                new IdentityRole
+                {
+                    Id = "273ee1bf-4213-4ced-a4cf-25d6efff0343",
                     Name = "Support Agent",
-                NormalizedName= "Support Agent".ToUpper()
+                    NormalizedName = "Support Agent".ToUpper()
                 });
 
 
-       
+
 
         }
-    
+
     }
 }
