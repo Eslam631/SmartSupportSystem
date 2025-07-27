@@ -11,11 +11,15 @@ namespace Services
         {
             services.AddScoped<IServiceManager, ServiceManager>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<Func<IAuthService>>(serviceProvider => () => serviceProvider.GetRequiredService<IAuthService>());
+            services.AddScoped<Func<IAuthService>>(serviceProvider =>
+            () => serviceProvider.GetRequiredService<IAuthService>());
 
             services.AddOptions<JwtSettingOption>()
        .BindConfiguration(JwtSettingOption.SectionName);
 
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<Func<IDepartmentService>>(serviceProvider => 
+            () => serviceProvider.GetRequiredService<IDepartmentService>());
             return services;
         }
     }

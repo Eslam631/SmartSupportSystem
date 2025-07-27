@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data.Context;
 using Persistence.Data.SeedData;
+using Persistence.Repository;
 
 
 namespace Persistence
@@ -17,6 +18,11 @@ namespace Persistence
             services.AddDbContext<AuthorizationDbContext>(option =>
             {
                 option.UseSqlServer(Config.GetConnectionString("IdentityConnection"));
+
+            });
+            services.AddDbContext<ApplicationDbContext>(option =>
+            {
+                option.UseSqlServer(Config.GetConnectionString("DefaultConnection"));
             });
 
             services.AddIdentityCore<ApplicationUser>(options =>
@@ -37,6 +43,8 @@ namespace Persistence
                     .AddEntityFrameworkStores<AuthorizationDbContext>();
 
             services.AddScoped<IDataSeed, DataSeed>();
+         
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
             services.AddOptions<SettingJsonAdmin>()

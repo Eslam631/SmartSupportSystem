@@ -1,9 +1,7 @@
 
 using Domain.Contracts;
-using Microsoft.Extensions.Options;
 using Persistence;
 using Services;
-using Services.settingOption;
 using SmartSupportSystem.WepApi;
 
 namespace SmartSupportSystem

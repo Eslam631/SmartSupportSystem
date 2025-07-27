@@ -1,6 +1,6 @@
 ﻿namespace Domain.Exceptions
 {
-    public class DuplicateEmailException(string message):Exception(message)
+    public sealed class DuplicateEmailException(string message):Exception(message)
     {
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Services
 {
-    public class ServiceManager(Func<IAuthService> _AuthSreviceFunc) : IServiceManager
+    public class ServiceManager(Func<IAuthService> _AuthServiceFunc,Func<IDepartmentService> _DepartmentServiceFunc) : IServiceManager
     {
-        public IAuthService AuthService => _AuthSreviceFunc.Invoke();
+        public IAuthService AuthService => _AuthServiceFunc.Invoke();
+
+        public IDepartmentService DepartmentService => _DepartmentServiceFunc.Invoke();
     }
 }
