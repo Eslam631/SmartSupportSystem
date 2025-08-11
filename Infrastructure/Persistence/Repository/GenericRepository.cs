@@ -12,7 +12,7 @@ namespace Persistence.Repository
 
         public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-        return  await  _dbContext.Set<T>().ToListAsync(cancellationToken);
+        return  await  _dbContext.Set<T>().Where(x=>!x.IsDeleted).ToListAsync(cancellationToken);
         }
 
         public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellation = default)
@@ -20,21 +20,21 @@ namespace Persistence.Repository
            return await _dbContext.Set<T>().FindAsync(id,cancellation);
         }
 
-        public async Task<bool> AddAsync(T entity, CancellationToken cancellation = default)
-        {
-         var result=  await _dbContext.Set<T>().AddAsync(entity,cancellation) ;
-            if (result == null)
-                return false; // Entity not added successfully
+        //public async Task<bool> AddAsync(T entity, CancellationToken cancellation = default)
+        //{
+        // var result=  await _dbContext.Set<T>().AddAsync(entity,cancellation) ;
+        //    if (result == null)
+        //        return false; // Entity not added successfully
             
-            return result.State == EntityState.Added? true : false;
+        //    return result.State == EntityState.Added? true : false;
 
-        }
+        //}
 
-        public bool Update(T entity, CancellationToken cancellation = default)
-        {
-            var result = _dbContext.Set<T>().Update(entity);
-            return result.State == EntityState.Modified ? true : false;
-        }
+        //public bool Update(T entity, CancellationToken cancellation = default)
+        //{
+        //    var result = _dbContext.Set<T>().Update(entity);
+        //    return result.State == EntityState.Modified ? true : false;
+        //}
 
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellation = default)
         {

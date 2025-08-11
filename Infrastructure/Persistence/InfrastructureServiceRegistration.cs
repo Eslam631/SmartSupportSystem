@@ -43,7 +43,8 @@ namespace Persistence
                     .AddEntityFrameworkStores<AuthorizationDbContext>();
 
             services.AddScoped<IDataSeed, DataSeed>();
-         
+            services.AddScoped<IGenericRepository<Department>, DepartmentRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 

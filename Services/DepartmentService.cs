@@ -61,10 +61,12 @@ namespace Services
                 UpdatedAt = null
             };
 
-          await  _unitOfWork.GenericRepository<Department>().AddAsync(department,cancellation);
+            var exsited = await  _unitOfWork.DepartmentRepository.AddAsync(department,cancellation);
+            
+            if (!exsited)
+                throw new DuplicateDepartmentException("This Department Already have you");
             var result = await _unitOfWork.SaveChangesAsync(cancellation);
-            if (!result)
-                throw new Exception($"This Department ={request.Name} is Found");
+           
             return 
                 new DepartmentResponse
                  {
@@ -82,8 +84,11 @@ namespace Services
             department.Name = request.Name;
             department.UpdatedBy = UserId;
             department.UpdatedAt = DateTime.UtcNow;
-          _unitOfWork.GenericRepository<Department>().Update(department);
-          var Result=   await _unitOfWork.SaveChangesAsync();
+      var exsited = await  _unitOfWork.DepartmentRepository.Update(department);
+            if (!exsited)
+                throw new DuplicateDepartmentException("This Department Already have you"); // Update failed, department not found or not updated
+                                                  // Save changes to the database
+            var Result =   await _unitOfWork.SaveChangesAsync();
 
             return Result;
 

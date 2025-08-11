@@ -7,6 +7,9 @@ namespace Persistence.Repository
     public class UnitOfWork(ApplicationDbContext _dbContext) : IUnitOfWork
     {
      private readonly Dictionary<string, object> _Repositories = [];
+       private readonly Lazy<IDepartmentRepository> _DepartmentRepository  =new Lazy<IDepartmentRepository>(() => new DepartmentRepository(_dbContext));
+
+        public IDepartmentRepository DepartmentRepository => _DepartmentRepository.Value;
         public IGenericRepository<T> GenericRepository<T>() where T : BaseEntity
         {
             var TypeName = typeof(T).Name;
@@ -29,6 +32,7 @@ namespace Persistence.Repository
             }
 
         }
+      
 
         public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
